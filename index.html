@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Negocio de Postres en Vasos - Oferta Especial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #FFD700; /* Dorado */
+            --accent: #25D366; /* WhatsApp Green */
+            --qr-color: #5e2ced; /* Color típico de QR Simple/Bancos */
+            --text-light: #ffffff;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('https://d1yei2z3i6k35z.cloudfront.net/1499825/691daa813e5c2_30recetas2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* Overlay oscuro para mejorar lectura */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px 15px 60px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- TIMER DE URGENCIA --- */
+        .timer-banner {
+            background: linear-gradient(90deg, #ff4b4b, #d60000);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95em;
+            box-shadow: 0 0 15px rgba(255, 75, 75, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            animation: pulse-red 2s infinite;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- HEADER --- */
+        .header { text-align: center; margin-bottom: 5px; }
+        
+        .pre-headline {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .main-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            line-height: 1.1;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+        
+        .sub-headline {
+            font-size: 1em;
+            opacity: 0.95;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* --- GLASS CARDS --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .product-hero-img {
+            width: 65%;
+            margin: 0 auto 20px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transform: rotate(-3deg);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .pain-point {
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .highlight { color: var(--primary); font-weight: 700; }
+
+        /* --- RECIPES PREVIEW --- */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .recipe-tag {
+            background: rgba(0,0,0,0.4);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.75em;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* --- BONOS --- */
+        .bonus-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: left;
+        }
+        .bonus-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+
+        .bonus-icon {
+            font-size: 1.8em;
+            background: rgba(255,255,255,0.1);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .bonus-content h3 { color: var(--primary); font-size: 1em; margin-bottom: 4px; }
+        .bonus-content p { font-size: 0.85em; opacity: 0.9; }
+
+        /* --- VALUE TABLE --- */
+        .value-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin: 10px 0;
+        }
+        .value-table td { padding: 5px; font-size: 0.9em; }
+        .value-table .item-name { text-align: left; opacity: 0.9; }
+        .value-table .item-price { text-align: right; text-decoration: line-through; color: #ff6b6b; }
+        .total-row td { 
+            color: var(--primary); 
+            font-weight: 800; 
+            font-size: 1.1em; 
+            padding-top: 15px; 
+            border-top: 1px solid rgba(255,255,255,0.3);
+            text-decoration: none !important;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials-section { margin-top: 10px; }
+        .section-label { font-size: 0.9em; margin-bottom: 10px; font-weight: 600; opacity: 0.9; display: flex; gap: 5px; }
+        
+        .testimonial-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+        }
+        .testimonial-card {
+            flex: 0 0 85%;
+            scroll-snap-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .testimonial-img { width: 100%; display: block; }
+
+        /* --- OFFER CARD --- */
+        .offer-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(0,0,0,0.2));
+            border: 1px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        /* Brillo animado de fondo */
+        .offer-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.05) 0%, transparent 60%);
+            animation: spin 10s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .price-container { margin: 15px 0; position: relative; z-index: 2; }
+        
+        .old-price { font-size: 1.1em; text-decoration: line-through; opacity: 0.7; display: block; margin-bottom: 5px; }
+        
+        .new-price {
+            font-size: 3.5em;
+            font-weight: 800;
+            color: var(--text-light);
+            line-height: 0.9;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+        .currency { font-size: 0.35em; vertical-align: middle; letter-spacing: 2px; }
+
+        /* --- PAYMENT METHODS --- */
+        .payment-methods {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .payment-title {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+        
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .payment-badge {
+            background: white;
+            color: #333;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .qr-badge { color: var(--qr-color); }
+
+        .cta-button {
+            background: linear-gradient(95deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 800;
+            box-shadow: 0 4px 25px rgba(37, 211, 102, 0.4);
+            width: 100%;
+            animation: pulse-green 2s infinite;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+            margin-top: 15px;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); transform: scale(1); }
+        }
+
+        .guarantee {
+            margin-top: 15px;
+            font-size: 0.7em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.7;
+            position: relative; 
+            z-index: 2;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="timer-banner">
+            <span>⏳ OFERTA FLASH TERMINA EN:</span>
+            <span id="countdown">04:59:12</span>
+        </div>
+
+        <div class="header">
+            <p class="pre-headline">Sistema de Negocio Rentable</p>
+            <h1 class="main-headline">EMPIEZA TU NEGOCIO DE POSTRES HOY</h1>
+            <p class="sub-headline">Descubre cómo <strong>una sola receta base</strong> te permite crear 30 productos irresistibles para vender en Bolivia.</p>
+        </div>
+
+        <div class="glass-card">
+            <img src="https://d1yei2z3i6k35z.cloudfront.net/1499825/6913cb8a7f136_Dise%C3%B1osint%C3%ADtulo1.png" alt="Ebook 30 Recetas" class="product-hero-img">
+            
+            <p class="pain-point">
+                ¿Quieres ingresos extra pero piensas que los ingredientes están caros? <br><br>
+                <span class="highlight">Error.</span> Con el <strong>Método Marquesa</strong>, usas ingredientes económicos para crear postres de alta demanda con márgenes de ganancia del 200%.
+            </p>
+
+            <p style="text-align:center; font-weight:600; margin-top:20px; font-size:0.9em;">APRENDERÁS A PREPARAR:</p>
+            <div class="recipes-grid">
+                <div class="recipe-tag">🍫 Oreo Clásica</div>
+                <div class="recipe-tag">🍋 Pie de Limón</div>
+                <div class="recipe-tag">❤️ Red Velvet</div>
+                <div class="recipe-tag">☕ Tiramisú</div>
+                <div class="recipe-tag">🍍 Piña Colada</div>
+                <div class="recipe-tag">🌰 Nutella</div>
+            </div>
+        </div>
+
+        <div class="glass-card bonus-stack">
+            <h2 style="text-align:center; font-family:'Playfair Display'; margin-bottom:20px; font-size:1.5em;">LO QUE RECIBES HOY:</h2>
+            
+            <div class="bonus-item">
+                <div class="bonus-icon">📚</div>
+                <div class="bonus-content">
+                    <h3>Recetario Premium (30 Variedades)</h3>
+                    [span_0](start_span)<p>El paso a paso exacto[span_0](end_span). [span_1](start_span)Domina la "Base Única de Pudín" y crea un imperio de sabores[span_1](end_span).</p>
+                </div>
+            </div>
+
+            <div class="bonus-item">
+                <div class="bonus-icon">🤖</div>
+                <div class="bonus-content">
+                    <h3>Calculadora de Precios con IA</h3>
+                    <p>Nunca pierdas dinero. Esta herramienta te dice el precio de venta exacto para ganar bien.</p>
+                </div>
+            </div>
+
+            <div class="bonus-item">
+                <div class="bonus-icon">📸</div>
+                <div class="bonus-content">
+                    <h3>Pack de Imágenes + Catálogo</h3>
+                    <p>Empieza a vender ANTES de cocinar. Fotos profesionales listas para subir a tus estados.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials-section">
+            <div class="section-label"><span>💬</span> Ellas ya están generando ingresos:</div>
+            <div class="testimonial-slider">
+                <div class="testimonial-card"><img src="https://d1yei2z3i6k35z.cloudfront.net/1499825/69136ae45f1dd_Screenshot_20251111-122712.png" class="testimonial-img"></div>
+                <div class="testimonial-card"><img src="https://d1yei2z3i6k35z.cloudfront.net/1499825/69136ac46699b_Screenshot_20251111-115827.png" class="testimonial-img"></div>
+                <div class="testimonial-card"><img src="https://d1yei2z3i6k35z.cloudfront.net/1499825/69136aa6d8199_Screenshot_20251111-122833.png" class="testimonial-img"></div>
+                <div class="testimonial-card"><img src="https://d1yei2z3i6k35z.cloudfront.net/1499825/69136a8f5b104_Screenshot_20251111-123710.png" class="testimonial-img"></div>
+            </div>
+            <p style="text-align:center; font-size:0.7em; opacity:0.6; margin-top:5px;">Desliza para ver más ➡️</p>
+        </div>
+
+        <div class="glass-card offer-card">
+            <h3 style="text-transform:uppercase; letter-spacing:1px; font-size:0.85em; margin-bottom:15px; opacity:0.8;">Resumen de Valor Real</h3>
+            
+            <table class="value-table">
+                <tr>
+                    <td class="item-name">Recetario 30 Postres</td>
+                    <td class="item-price">150 Bs</td>
+                </tr>
+                <tr>
+                    <td class="item-name">Calculadora de Costos</td>
+                    <td class="item-price">50 Bs</td>
+                </tr>
+                <tr>
+                    <td class="item-name">Pack Fotografía & Catálogo</td>
+                    <td class="item-price">80 Bs</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="item-name">VALOR TOTAL</td>
+                    <td class="item-price" style="text-decoration:none; color:white;">280 Bs</td>
+                </tr>
+            </table>
+
+            <div style="margin: 20px 0; border-top: 1px dashed rgba(255,255,255,0.3);"></div>
+
+            <p style="font-size:0.9em; margin-bottom:5px; font-weight:600;">OFERTA DISPONIBLE SOLO HOY:</p>
+            
+            <div class="price-container">
+                <span class="old-price">Precio Normal: 100 Bs</span>
+                <span class="new-price">35 <span class="currency">BOLIVIANOS</span></span>
+            </div>
+
+            <p style="font-size:0.8em; color:#FFD700; margin-bottom:15px; font-weight:600;">⚡ Único pago - Acceso de por vida</p>
+
+            <a href="https://wa.me/584128939324?text=Hola!%20Quiero%20aprovechar%20la%20oferta%20del%20Pack%20de%20Postres%20por%2035Bs%20antes%20de%20que%20suba%20de%20precio." class="cta-button" target="_blank">
+                <span style="margin-right:10px; font-size:1.4em;">📲</span> QUIERO LA OFERTA
+            </a>
+            
+            <div class="payment-methods">
+                <div class="payment-title">Pagos Seguros en Bolivia vía:</div>
+                <div class="payment-icons">
+                    <div class="payment-badge qr-badge">
+                        <span style="font-size:1.2em">🔳</span> QR Simple
+                    </div>
+                    <div class="payment-badge">
+                        <span>🏦</span> Transferencia
+                    </div>
+                </div>
+            </div>
+
+            <div class="guarantee">
+                <span>🔒</span> Compra 100% Segura • Entrega Inmediata
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Timer de 5 horas (simulado para urgencia)
+        function startTimer(duration, display) {
+            var timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = hours + ":" + minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var fiveHours = 60 * 60 * 5; 
+            var display = document.querySelector('#countdown');
+            startTimer(fiveHours, display);
+        };
+    </script>
+</body>
+</html>
