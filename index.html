@@ -307,6 +307,7 @@
             position: relative;
             z-index: 2;
             margin-top: 15px;
+            cursor: pointer;
         }
 
         @keyframes pulse-green {
@@ -370,7 +371,7 @@
                 <div class="bonus-icon">📚</div>
                 <div class="bonus-content">
                     <h3>Recetario Premium (30 Variedades)</h3>
-                    [span_0](start_span)<p>El paso a paso exacto[span_0](end_span). [span_1](start_span)Domina la "Base Única de Pudín" y crea un imperio de sabores[span_1](end_span).</p>
+                    <p><span class="highlight">El paso a paso exacto.</span> <span class="highlight">Domina la "Base Única de Pudín" y crea un imperio de sabores.</span></p>
                 </div>
             </div>
 
@@ -435,9 +436,9 @@
 
             <p style="font-size:0.8em; color:#FFD700; margin-bottom:15px; font-weight:600;">⚡ Único pago - Acceso de por vida</p>
 
-            <a href="https://wa.me/584128939324?text=Hola!%20Quiero%20aprovechar%20la%20oferta%20del%20Pack%20de%20Postres%20por%2035Bs%20antes%20de%20que%20suba%20de%20precio." class="cta-button" target="_blank">
+            <button class="cta-button" onclick="trackConversion()">
                 <span style="margin-right:10px; font-size:1.4em;">📲</span> QUIERO LA OFERTA
-            </a>
+            </button>
             
             <div class="payment-methods">
                 <div class="payment-title">Pagos Seguros en Bolivia vía:</div>
@@ -477,6 +478,17 @@
                     timer = duration;
                 }
             }, 1000);
+        }
+
+        // Función para rastrear conversiones y abrir WhatsApp
+        function trackConversion() {
+            // Contador simple de conversiones
+            let conversions = localStorage.getItem('conversions') || 0;
+            conversions++;
+            localStorage.setItem('conversions', conversions);
+            
+            // Redirigir a WhatsApp
+            window.open('https://wa.me/584128939324?text=Hola!%20Quiero%20aprovechar%20la%20oferta%20del%20Pack%20de%20Postres%20por%2035Bs%20antes%20de%20que%20suba%20de%20precio.', '_blank');
         }
 
         window.onload = function () {
